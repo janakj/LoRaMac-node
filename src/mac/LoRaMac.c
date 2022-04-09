@@ -3331,6 +3331,11 @@ LoRaMacStatus_t SendFrameOnChannel( uint8_t channel )
     // Send now
     Radio.Send( MacCtx.PktBuffer, MacCtx.PktBufferLen );
 
+    if(MacCtx.ChannelsNbTransCounter != 1 && MacCtx.MacPrimitives->MacMcpsRetransmit != NULL)
+    {
+        MacCtx.MacPrimitives->MacMcpsRetransmit( );
+    }
+
     return LORAMAC_STATUS_OK;
 }
 
