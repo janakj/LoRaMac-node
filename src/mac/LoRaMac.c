@@ -847,6 +847,7 @@ static void ProcessRadioTxDone( void )
     txDone.ElapsedTimeSinceStartUp = SysTimeSub( SysTimeGetMcuTime( ), Nvm.MacGroup2.InitializationTime );
     txDone.LastTxAirTime = MacCtx.TxTimeOnAir;
     txDone.Joined  = true;
+    txDone.JoinDutyCycleEnabled = Nvm.MacGroup2.JoinDutyCycleOn;
     if( Nvm.MacGroup2.NetworkActivation == ACTIVATION_TYPE_NONE )
     {
         txDone.Joined  = false;
@@ -2885,6 +2886,7 @@ static LoRaMacStatus_t ScheduleTx( bool allowDelayedTx )
     nextChan.AggrTimeOff = Nvm.MacGroup1.AggregatedTimeOff;
     nextChan.Datarate = Nvm.MacGroup1.ChannelsDatarate;
     nextChan.DutyCycleEnabled = Nvm.MacGroup2.DutyCycleOn;
+    nextChan.JoinDutyCycleEnabled = Nvm.MacGroup2.JoinDutyCycleOn;
     nextChan.ElapsedTimeSinceStartUp = SysTimeSub( SysTimeGetMcuTime( ), Nvm.MacGroup2.InitializationTime );
     nextChan.LastAggrTx = Nvm.MacGroup1.LastTxDoneTime;
     nextChan.LastTxIsJoinRequest = false;
@@ -3663,6 +3665,9 @@ LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t* primitives, LoRaMacC
     params.NvmGroup2 = &Nvm.RegionGroup2;
     params.Bands = &RegionBands;
     RegionInitDefaults( Nvm.MacGroup2.Region, &params );
+
+    // Enable Join duty cycling by default
+    Nvm.MacGroup2.JoinDutyCycleOn = true;
 
     // Reset to defaults
     getPhy.Attribute = PHY_DUTY_CYCLE;
@@ -5396,6 +5401,12 @@ void LoRaMacTestSetDutyCycleOn( bool enable )
         // Handle NVM potential changes
         MacCtx.MacFlags.Bits.NvmHandle = 1;
     }
+}
+
+void LoRaMacTestSetJoinDutyCycleOn( bool enable )
+{
+    Nvm.MacGroup2.JoinDutyCycleOn = enable;
+    MacCtx.MacFlags.Bits.NvmHandle = 1;
 }
 
 LoRaMacStatus_t LoRaMacDeInitialization( void )
