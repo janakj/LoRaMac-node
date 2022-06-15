@@ -1805,7 +1805,7 @@ void LoRaMacProcess( void )
         MacCtx.MacFlags.Bits.NvmHandle = 1;
     }
     LoRaMacHandleIndicationEvents( );
-    if( Nvm.MacGroup2.DeviceClass == CLASS_C && MacCtx.RxSlot == RX_SLOT_WIN_CLASS_C )
+    if( MacCtx.RxSlot == RX_SLOT_WIN_CLASS_C )
     {
         OpenContinuousRxCWindow( );
     }
@@ -2017,6 +2017,9 @@ static LoRaMacStatus_t SwitchClass( DeviceClass_t deviceClass )
         {
             if( deviceClass == CLASS_A )
             {
+                // Reset RxSlot to NONE
+                MacCtx.RxSlot = RX_SLOT_NONE;
+
                 Nvm.MacGroup2.DeviceClass = deviceClass;
 
                 // Set the radio into sleep to setup a defined state
