@@ -1804,7 +1804,7 @@ void LoRaMacProcess( void )
         MacCtx.MacFlags.Bits.NvmHandle = 1;
     }
     LoRaMacHandleIndicationEvents( );
-    if( MacCtx.RxSlot == RX_SLOT_WIN_CLASS_C )
+    if( Nvm.MacGroup2.DeviceClass == CLASS_C && MacCtx.RxSlot == RX_SLOT_WIN_CLASS_C )
     {
         OpenContinuousRxCWindow( );
     }
