@@ -3821,6 +3821,7 @@ LoRaMacStatus_t LoRaMacInitialization( LoRaMacPrimitives_t* primitives, LoRaMacC
 LoRaMacStatus_t LoRaMacStart( void )
 {
     MacCtx.MacState = LORAMAC_IDLE;
+    UpdateRxSlotIdleState();
     return LORAMAC_STATUS_OK;
 }
 
