@@ -1505,6 +1505,11 @@ static void LoRaMacHandleIrqEvents( void )
 
 bool LoRaMacIsBusy( void )
 {
+    if( MacCtx.MacState == LORAMAC_STOPPED )
+    {
+        return false;
+    }
+
     if( LoRaMacRadioEvents.Events.RxProcessPending == 1 )
     {
         return true;
