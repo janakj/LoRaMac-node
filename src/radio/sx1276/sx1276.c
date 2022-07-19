@@ -90,7 +90,7 @@ static void RxChainCalibration( void );
  * \brief Sets the SX1276 in transmission mode for the given time
  * \param [IN] timeout Transmission timeout [ms] [0: continuous, others timeout]
  */
-static void SX1276SetTx( uint32_t timeout );
+void SX1276SetTx( uint32_t timeout );
 
 /*!
  * \brief Writes the buffer contents to the SX1276 FIFO
