@@ -445,6 +445,12 @@ void SX1276SetPublicNetwork( bool enable );
  */
 uint32_t SX1276GetWakeupTime( void );
 
+/*!
+ * \brief Sets the SX1276 in transmission mode for the given time
+ * \param [IN] timeout Transmission timeout [ms] [0: continuous, others timeout]
+ */
+void SX1276SetTx( uint32_t timeout );
+
 #ifdef __cplusplus
 }
 #endif
