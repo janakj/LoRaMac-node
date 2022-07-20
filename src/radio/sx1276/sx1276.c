@@ -1066,7 +1066,7 @@ void SX1276SetRx( uint32_t timeout )
     }
 }
 
-static void SX1276SetTx( uint32_t timeout )
+void SX1276SetTx( uint32_t timeout )
 {
     TimerStop( &RxTimeoutTimer );
 
