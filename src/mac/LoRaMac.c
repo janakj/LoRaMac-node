@@ -4138,6 +4138,16 @@ LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet )
             mibGet->Param.Rejoin2CycleInSec = Nvm.MacGroup2.Rejoin2CycleInSec;
             break;
         }
+        case MIB_ADR_ACK_LIMIT:
+        {
+            mibGet->Param.AdrAckLimit = MacCtx.AdrAckLimit;
+            break;
+        }
+        case MIB_ADR_ACK_DELAY:
+        {
+            mibGet->Param.AdrAckDelay = MacCtx.AdrAckDelay;
+            break;
+        }
         default:
         {
             status = LoRaMacClassBMibGetRequestConfirm( mibGet );
@@ -4807,6 +4817,16 @@ LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet )
             {
                 status = LORAMAC_STATUS_PARAMETER_INVALID;
             }
+            break;
+        }
+        case MIB_ADR_ACK_LIMIT:
+        {
+            MacCtx.AdrAckLimit = mibSet->Param.AdrAckLimit;
+            break;
+        }
+        case MIB_ADR_ACK_DELAY:
+        {
+            MacCtx.AdrAckDelay = mibSet->Param.AdrAckDelay;
             break;
         }
         default:
