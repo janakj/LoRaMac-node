@@ -4896,6 +4896,7 @@ LoRaMacStatus_t LoRaMacMcChannelSetup( McChannelParams_t *channel )
     }
 
     Nvm.MacGroup2.MulticastChannelList[channel->GroupID].ChannelParams = *channel;
+    MacCtx.MacFlags.Bits.NvmHandle = 1;
 
     if( channel->IsRemotelySetup == true )
     {
@@ -4948,6 +4949,7 @@ LoRaMacStatus_t LoRaMacMcChannelDelete( AddressIdentifier_t groupID )
     memset1( ( uint8_t* )&channel, 0, sizeof( McChannelParams_t ) );
 
     Nvm.MacGroup2.MulticastChannelList[groupID].ChannelParams = channel;
+    MacCtx.MacFlags.Bits.NvmHandle = 1;
     return LORAMAC_STATUS_OK;
 }
 
@@ -5019,6 +5021,7 @@ LoRaMacStatus_t LoRaMacMcChannelSetupRxParams( AddressIdentifier_t groupID, McRx
     {
         // Apply parameters
         Nvm.MacGroup2.MulticastChannelList[groupID].ChannelParams.RxParams = *rxParams;
+        MacCtx.MacFlags.Bits.NvmHandle = 1;
     }
     else
     {
