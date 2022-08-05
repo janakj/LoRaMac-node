@@ -4151,6 +4151,38 @@ LoRaMacStatus_t LoRaMacMibGetRequestConfirm( MibRequestConfirm_t* mibGet )
             mibGet->Param.AdrAckDelay = Nvm.MacGroup2.MacParamsDefaults.AdrAckDelay;
             break;
         }
+        case MIB_RSSI_FREE_THRESHOLD:
+        {
+#if defined(REGION_KR920) || defined(REGION_AS923)
+            if( Nvm.MacGroup2.Region != LORAMAC_REGION_AS923 && Nvm.MacGroup2.Region != LORAMAC_REGION_KR920 )
+            {
+                status = LORAMAC_STATUS_ERROR;
+            }
+            else
+            {
+                mibGet->Param.RssiFreeThreshold = Nvm.RegionGroup2.RssiFreeThreshold;
+            }
+#else
+            status = LORAMAC_STATUS_ERROR;
+#endif
+            break;
+        }
+        case MIB_CARRIER_SENSE_TIME:
+        {
+#if defined(REGION_KR920) || defined(REGION_AS923)
+            if( Nvm.MacGroup2.Region != LORAMAC_REGION_AS923 && Nvm.MacGroup2.Region != LORAMAC_REGION_KR920 )
+            {
+                status = LORAMAC_STATUS_ERROR;
+            }
+            else
+            {
+                mibGet->Param.CarrierSenseTime = Nvm.RegionGroup2.CarrierSenseTime;
+            }
+#else
+            status = LORAMAC_STATUS_ERROR;
+#endif
+            break;
+        }
         default:
         {
             status = LoRaMacClassBMibGetRequestConfirm( mibGet );
@@ -4840,6 +4872,38 @@ LoRaMacStatus_t LoRaMacMibSetRequestConfirm( MibRequestConfirm_t* mibSet )
         case MIB_ADR_ACK_DEFAULT_DELAY:
         {
             Nvm.MacGroup2.MacParamsDefaults.AdrAckDelay = mibSet->Param.AdrAckDelay;
+            break;
+        }
+        case MIB_RSSI_FREE_THRESHOLD:
+        {
+#if defined(REGION_KR920) || defined(REGION_AS923)
+            if( Nvm.MacGroup2.Region != LORAMAC_REGION_AS923 && Nvm.MacGroup2.Region != LORAMAC_REGION_KR920 )
+            {
+                status = LORAMAC_STATUS_ERROR;
+            }
+            else
+            {
+                Nvm.RegionGroup2.RssiFreeThreshold = mibSet->Param.RssiFreeThreshold;
+            }
+#else
+            status = LORAMAC_STATUS_ERROR;
+#endif
+            break;
+        }
+        case MIB_CARRIER_SENSE_TIME:
+        {
+#if defined(REGION_KR920) || defined(REGION_AS923)
+            if( Nvm.MacGroup2.Region != LORAMAC_REGION_AS923 && Nvm.MacGroup2.Region != LORAMAC_REGION_KR920 )
+            {
+                status = LORAMAC_STATUS_ERROR;
+            }
+            else
+            {
+                Nvm.RegionGroup2.CarrierSenseTime = mibSet->Param.CarrierSenseTime;
+            }
+#else
+            status = LORAMAC_STATUS_ERROR;
+#endif
             break;
         }
         default:
